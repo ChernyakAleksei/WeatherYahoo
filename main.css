@@ -1,0 +1,81 @@
+*{
+	margin:0;
+	padding:0;
+}
+
+body{
+	font-family:"Roboto", arial, sans-serif;
+	background: #fff url(http://pogoda.ictv.ua/images/design/body_bg_02.jpg) center top no-repeat;
+	height: 450px;
+	background-size: auto;
+
+}
+
+.nav{
+	width: 20%;
+	height: 50px;
+	overflow:hidden;
+	background: rgba(139, 137, 137, 0.5);
+	text-align: center;
+	color: #191919;
+}
+
+ul{
+	list-style: none;
+}
+
+li{
+	cursor: pointer;
+	text-align: center;
+	width: 100%;
+	vertical-align:middle;
+	line-height:50px;
+}
+
+.nav p{
+	line-height:50px;
+}
+
+li:hover{
+	background: rgba(139, 137, 145, 1);;
+}
+
+div.container{
+	background: url('http://pogoda.ictv.ua/images/design/body_bg_02.jpg') center top no-repeat;
+	position: absolute;
+	opacity: 0;
+	filter:alpha(opacity=0);
+	height: 400px;
+	width: 60%;
+	left: 25%;
+	top: 50px;
+	z-index: 2;
+	padding-left: 1em;
+}
+
+h1{
+	margin:0 0;
+	margin-bottom: 2em;
+	font-weight: normal;
+	font-size: 3em;
+	color:#fff;
+	padding-bottom: 10px;
+}
+
+h2{
+	color:#fff;
+	font-weight: normal;
+}
+
+span{
+	font-size: 5em;
+	color:#fff;
+}
+
+div.manual{
+	margin-bottom: 2em;
+}
+
+
+
+

@@ -11,4 +11,11 @@ $(document).ready(function(){
 		$(this).stop().animate({height:'50px'},{queue:false, duration:600, easing: 'easeOutBounce'});
 		$(this).find('p').text('Forecast');
 	});
+
+	$('li').hover(function(){
+		$(this).css("background","rgba(139, 137, 137, 0.5)");
+	}, function(){
+		$(this).css("background","");
+	});
+	
 });

@@ -12,7 +12,7 @@ if(typeof Object.create !=='function'){
 		init: function(elem){
 			var self=this;
 
-			self.template = '<h1>{{City}}</h1><div class="manual"><h2>Wind speed ({{wind}} mph) {{text}}</h2></div><span>+{{Temp}}</span><span><sup>o</sup>C</span>';
+			self.template = '<h1>{{City}}</h1><div class="manual"><h2>Wind speed ({{wind}} mph) {{text}}</h2></div><span>{{Temp}}</span><span><sup>o</sup>C</span>';
 			this.container = $('#weather-block');
 			self.elem=elem;
 			self.$elem= $(elem);
@@ -26,11 +26,15 @@ if(typeof Object.create !=='function'){
 
 			self.fetch().done(function(data){
 				var way = data.query.results.channel;
+				console.log(way);
 				self.nameCity = way.location.city;
 				self.temp = Math.floor((+way.item.condition.temp-32)*5/9);
+				self.temp = self.temp>0?'+'+self.temp:self.temp;
 				self.text = way.item.condition.text;
 				self.wind = way.wind.speed; 
+				self.itemForecast=way.item.forecast;
 				
+				self.weakforcast();
 				self.display();
 
 			});
@@ -41,7 +45,10 @@ if(typeof Object.create !=='function'){
 
 			$('#weather-block').animate({ opacity: 1}, 500);
 			self.container.html(function(){
-				return self.template.replace(/{{City}}/,self.nameCity).replace(/{{wind}}/, self.wind).replace(/{{text}}/, self.text).replace(/{{Temp}}/, self.temp);
+				return self.template.replace(/{{City}}/,self.nameCity)
+				.replace(/{{wind}}/, self.wind)
+				.replace(/{{text}}/, self.text)
+				.replace(/{{Temp}}/, self.temp);
 			});						
 		},
 
@@ -50,6 +57,27 @@ if(typeof Object.create !=='function'){
 				url: this.url,
 				dataType: 'jsonp'
 			});
+		},
+
+		weakforcast:function(){
+			var self = this,
+			ul = $('<ul class="week"></ul>'),
+			div = $('<div></div>');
+			for (var i=0,l=4;i<l;i++){
+				var date = self.itemForecast[i].date,
+						day = self.itemForecast[i].day,
+						highT = Math.floor((+self.itemForecast[i].high-32)*5/9),
+						lowT = Math.floor((+self.itemForecast[i].low-32)*5/9),
+						text = self.itemForecast[i].text,
+						li,ul;
+						highT = highT>0?'+'+highT:highT;
+						lowT = lowT>0?'+'+lowT:lowT;
+						li=$('<li></li>').html('<b>'+day+' '+highT+'  '+lowT+'</b><br><b>'+text+'</b>');
+						ul.append(li);
+			}
+			div.append(ul);
+			self.ul = div.html();
+			self.template += self.ul;
 		}		
 	}	
 
@@ -62,6 +90,6 @@ if(typeof Object.create !=='function'){
 
 	$('li').on('click', function(){
 	$(this).weatherShow()});
-		
+
 })(jQuery,window,document);	
 
